@@ -1,11 +1,25 @@
 package com.studytest.bmnltechexam
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import com.studytest.bmnltechexam.developer.DeveloperListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        attachFragment(DeveloperListFragment::class.java, DeveloperListFragment.TAG)
+    }
+
+    private fun attachFragment(
+        fragmentClass: Class<out Fragment>,
+        tag: String,
+        arguments: Bundle? = null,
+    ) {
+        supportFragmentManager.commit {
+            replace(R.id.fragmentContainer, fragmentClass, arguments, tag)
+        }
     }
 }
