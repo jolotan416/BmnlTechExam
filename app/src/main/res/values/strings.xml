@@ -3,4 +3,5 @@
 
     <!-- Content Descriptions -->
     <string name="add_developer_fab_content_description">Add Developer</string>
+    <string name="developer_photo">Developer Photo</string>
 </resources>
