@@ -12,7 +12,7 @@
         android:clipToPadding="false"
         android:paddingHorizontal="16dp"
         android:paddingTop="16dp"
-        android:paddingBottom="72dp"
+        android:paddingBottom="92dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

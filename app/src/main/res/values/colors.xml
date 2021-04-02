@@ -4,7 +4,7 @@
     <color name="backgroundWhite">#FAFAFA</color>
     <color name="backgroundGray">#EEEEEE</color>
     <color name="textBlack">#212121</color>
-    <color name="textBlue">#1565C0</color>
+    <color name="textBlue">#1E88E5</color>
 
     <!-- Dark Mode -->
     <color name="backgroundBlack">#424242</color>
