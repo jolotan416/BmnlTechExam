@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.studytest.bmnltechexam.developer.DeveloperListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         arguments: Bundle? = null,
     ) {
         supportFragmentManager.commit {
+            setReorderingAllowed(true)
             replace(R.id.fragmentContainer, fragmentClass, arguments, tag)
         }
     }
