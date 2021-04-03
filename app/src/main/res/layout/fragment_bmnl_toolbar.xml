@@ -40,6 +40,7 @@
             android:text="@{toolbarData.title}"
             android:textColor="@color/textWhite"
             android:textSize="20sp"
+            bmnl:willShow="@{toolbarData.hasTitle}"
             tools:text="Bmnl Toolbar" />
 
     </LinearLayout>

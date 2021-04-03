@@ -36,6 +36,9 @@ class BmnlToolbarFragment : Fragment(R.layout.fragment_bmnl_toolbar) {
     @Parcelize
     data class ToolbarData(
         val hasBackButton: Boolean,
-        val title: String
-    ) : Parcelable
+        val title: String?
+    ) : Parcelable {
+        val hasTitle: Boolean
+            get() = !title.isNullOrBlank()
+    }
 }
