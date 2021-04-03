@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bmnl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.BmnlToolbarFragment">
+
+    <data>
+
+        <variable
+            name="toolbarData"
+            type="com.studytest.bmnltechexam.views.BmnlToolbarFragment.ToolbarData" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/colorAccent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@string/back_button_content_description"
+            android:padding="12dp"
+            android:src="@drawable/ic_back_button"
+            app:tint="@color/textWhite"
+            bmnl:willShow="@{toolbarData.hasBackButton}" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="start|center_vertical"
+            android:text="@{toolbarData.title}"
+            android:textColor="@color/textWhite"
+            android:textSize="20sp"
+            tools:text="Bmnl Toolbar" />
+
+    </LinearLayout>
+
+</layout>

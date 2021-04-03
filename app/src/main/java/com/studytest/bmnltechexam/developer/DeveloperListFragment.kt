@@ -11,7 +11,8 @@ import com.studytest.bmnltechexam.databinding.FragmentDeveloperListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DeveloperListFragment : Fragment(R.layout.fragment_developer_list) {
+class DeveloperListFragment(private val developerPageCallback: DeveloperPageCallback) :
+    Fragment(R.layout.fragment_developer_list) {
     companion object {
         const val TAG = "DeveloperListFragment"
     }
@@ -23,13 +24,20 @@ class DeveloperListFragment : Fragment(R.layout.fragment_developer_list) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentDeveloperListBinding.bind(view)
+        configureViews()
         configureRecyclerView()
         initializeViewModel()
     }
 
+    private fun configureViews() {
+        binding.addDeveloperFab.setOnClickListener {
+            developerPageCallback.showPage(DeveloperPage.DEVELOPER_FORM)
+        }
+    }
+
     private fun configureRecyclerView() {
         binding.developersRecyclerView.apply {
-            adapter = DevelopersAdapter()
+            adapter = DevelopersAdapter(developerPageCallback)
             setHasFixedSize(true)
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(

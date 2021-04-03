@@ -2,27 +2,29 @@ package com.studytest.bmnltechexam
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.studytest.bmnltechexam.developer.DeveloperListFragment
+import com.studytest.bmnltechexam.developer.DeveloperPage
+import com.studytest.bmnltechexam.developer.DeveloperPageCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), DeveloperPageCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportFragmentManager.fragmentFactory = MainFragmentFactory(this)
         super.onCreate(savedInstanceState)
 
-        attachFragment(DeveloperListFragment::class.java, DeveloperListFragment.TAG)
+        showPage(DeveloperPage.DEVELOPER_LIST)
     }
 
-    private fun attachFragment(
-        fragmentClass: Class<out Fragment>,
-        tag: String,
-        arguments: Bundle? = null,
-    ) {
+    override fun showPage(developerPage: DeveloperPage, arguments: Bundle?) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragmentContainer, fragmentClass, arguments, tag)
+            developerPage.let {
+                replace(R.id.fragmentContainer, it.fragmentClass, arguments, it.tag)
+                if (it.willAddToBackStack) {
+                    addToBackStack(it.tag)
+                }
+            }
         }
     }
 }

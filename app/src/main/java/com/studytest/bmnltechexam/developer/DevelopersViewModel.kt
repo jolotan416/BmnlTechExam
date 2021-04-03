@@ -22,6 +22,7 @@ class DevelopersViewModel @Inject constructor(private val apiService: ApiService
     val developers: LiveData<List<Developer>> = mDevelopers
 
     fun requestDevelopers() {
+        // TODO: Handle loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val developers = apiService.getDevelopers()

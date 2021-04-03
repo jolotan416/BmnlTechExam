@@ -4,4 +4,8 @@
     <!-- Content Descriptions -->
     <string name="add_developer_fab_content_description">Add Developer</string>
     <string name="developer_photo">Developer Photo</string>
+    <string name="back_button_content_description">Back Button</string>
+
+    <!-- Developer Form Copies -->
+    <string name="add_contact">Add contact</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.studytest.bmnltechexam.developer
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -8,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.studytest.bmnltechexam.data.developer.Developer
 import com.studytest.bmnltechexam.databinding.DeveloperItemBinding
 
-class DevelopersAdapter : RecyclerView.Adapter<DevelopersAdapter.ViewHolder>() {
+class DevelopersAdapter(private val developerPageCallback: DeveloperPageCallback) :
+    RecyclerView.Adapter<DevelopersAdapter.ViewHolder>() {
     private val developers: AsyncListDiffer<Developer> =
         AsyncListDiffer(this, object : DiffUtil.ItemCallback<Developer>() {
             override fun areItemsTheSame(oldItem: Developer, newItem: Developer) =
@@ -37,7 +39,15 @@ class DevelopersAdapter : RecyclerView.Adapter<DevelopersAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: DeveloperItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(developer: Developer) {
-            binding.developer = developer
+            binding.apply {
+                this.developer = developer
+                root.setOnClickListener {
+                    val arguments = Bundle().apply {
+                        putParcelable(DeveloperPageArgument.DEVELOPER.argumentName, developer)
+                    }
+                    // TODO: Use DeveloperPageCallback to show developer
+                }
+            }
         }
     }
 }
