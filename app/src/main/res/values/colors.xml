@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="errorRed">#F44336</color>
+    <color name="hintGray">#9E9E9E</color>
+
     <!-- Light Mode -->
     <color name="backgroundWhite">#FAFAFA</color>
     <color name="backgroundGray">#EEEEEE</color>

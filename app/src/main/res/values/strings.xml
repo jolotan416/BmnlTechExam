@@ -8,4 +8,5 @@
 
     <!-- Developer Form Copies -->
     <string name="add_contact">Add contact</string>
+    <string name="first_name">First name</string>
 </resources>
