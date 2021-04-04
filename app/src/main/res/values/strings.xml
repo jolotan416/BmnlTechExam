@@ -8,5 +8,9 @@
 
     <!-- Developer Form Copies -->
     <string name="add_contact">Add contact</string>
-    <string name="first_name">First name</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="company_name">Company name</string>
+    <string name="submit">Submit</string>
 </resources>

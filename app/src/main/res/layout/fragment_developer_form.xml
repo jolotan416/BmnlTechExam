@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bmnl="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".developer.DeveloperFormFragment">
 
     <data>
+
+        <import type="android.text.InputType" />
 
         <variable
             name="developer"
@@ -32,14 +34,64 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <com.studytest.bmnltechexam.views.BmnlTextInputLayout
+                    android:id="@+id/nameTextField"
                     style="@style/text_input_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintValue="@string/first_name" />
+                    bmnl:hintValue="@{@string/name}"
+                    bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME}"
+                    bmnl:textValue="@{developer.name}"
+                    tools:hint="Name" />
 
+                <com.studytest.bmnltechexam.views.BmnlTextInputLayout
+                    android:id="@+id/emailTextField"
+                    style="@style/text_input_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    bmnl:hintValue="@{@string/email}"
+                    bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS}"
+                    bmnl:textValue="@{developer.email}"
+                    tools:hint="Email" />
+
+                <com.studytest.bmnltechexam.views.BmnlTextInputLayout
+                    android:id="@+id/phoneNumberTextField"
+                    style="@style/text_input_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    bmnl:hintValue="@{@string/phone_number}"
+                    bmnl:inputType="@{InputType.TYPE_CLASS_NUMBER}"
+                    bmnl:textValue="@{developer.phone}"
+                    tools:hint="Phone number" />
+
+                <com.studytest.bmnltechexam.views.BmnlTextInputLayout
+                    android:id="@+id/companyNameTextField"
+                    style="@style/text_input_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    bmnl:hintValue="@{@string/company_name}"
+                    bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME}"
+                    bmnl:textValue="@{developer.company.name}"
+                    tools:hint="Company name" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="?attr/colorAccent"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/submit"
+                    android:textColor="@color/textWhite"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

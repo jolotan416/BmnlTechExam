@@ -6,7 +6,6 @@
         <item name="colorPrimaryVariant">@color/backgroundDarkGray</item>
         <item name="colorPrimaryDark">@color/hintGray</item>
         <item name="colorOnPrimary">@color/textWhite</item>
-        <item name="colorControlActivated">@color/textBlack</item>
         <item name="colorAccent">@color/textLightBlue</item>
         <item name="colorError">@color/errorRed</item>
         <!-- Status bar color. -->

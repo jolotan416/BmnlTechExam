@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.google.android.material.textfield.TextInputLayout
-import com.studytest.bmnltechexam.R
 import com.studytest.bmnltechexam.databinding.BmnlTextInputLayoutBinding
 
 class BmnlTextInputLayout @JvmOverloads constructor(
@@ -24,7 +23,6 @@ class BmnlTextInputLayout @JvmOverloads constructor(
 
     init {
         inflateViews()
-        retrieveAttributes()
     }
 
     private fun inflateViews() {
@@ -33,12 +31,11 @@ class BmnlTextInputLayout @JvmOverloads constructor(
         binding = BmnlTextInputLayoutBinding.inflate(inflater, this)
     }
 
-    private fun retrieveAttributes() {
-        val attributes =
-            resources.obtainAttributes(attributeSet ?: return, R.styleable.BmnlTextInputLayout)
-        hint = attributes.getString(R.styleable.BmnlTextInputLayout_hintValue)
-        textValue = attributes.getString(R.styleable.BmnlTextInputLayout_textValue)
+    fun setHintValue(hint: String) {
+        this.hint = hint
+    }
 
-        attributes.recycle()
+    fun setInputType(inputType: Int) {
+        binding?.textField?.inputType = inputType
     }
 }
