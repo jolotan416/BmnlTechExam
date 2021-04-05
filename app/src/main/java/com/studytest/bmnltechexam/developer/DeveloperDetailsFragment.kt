@@ -9,7 +9,8 @@ import com.studytest.bmnltechexam.R
 import com.studytest.bmnltechexam.databinding.FragmentDeveloperDetailsBinding
 import com.studytest.bmnltechexam.views.BmnlToolbarFragment
 
-class DeveloperDetailsFragment : Fragment(R.layout.fragment_developer_details) {
+class DeveloperDetailsFragment(private val developerPageCallback: DeveloperPageCallback) :
+    Fragment(R.layout.fragment_developer_details) {
     companion object {
         const val TAG = "DeveloperDetailsFragment"
     }
@@ -22,8 +23,13 @@ class DeveloperDetailsFragment : Fragment(R.layout.fragment_developer_details) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentDeveloperDetailsBinding.bind(view)
-        configureToolbar()
+        configureViews()
         observeViewModel()
+    }
+
+    private fun configureViews() {
+        configureToolbar()
+        configureButtons()
     }
 
     private fun configureToolbar() {
@@ -34,6 +40,14 @@ class DeveloperDetailsFragment : Fragment(R.layout.fragment_developer_details) {
         childFragmentManager.commit {
             setReorderingAllowed(true)
             replace(binding.toolbarContainer.id, BmnlToolbarFragment::class.java, arguments)
+        }
+    }
+
+    private fun configureButtons() {
+        binding.apply {
+            editButton.setOnClickListener {
+                developerPageCallback.showPage(DeveloperPage.DEVELOPER_FORM)
+            }
         }
     }
 
