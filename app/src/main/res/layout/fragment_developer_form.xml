@@ -12,6 +12,10 @@
             name="developer"
             type="com.studytest.bmnltechexam.data.developer.Developer" />
 
+        <variable
+            name="isFormValid"
+            type="Boolean" />
+
     </data>
 
     <LinearLayout
@@ -81,12 +85,13 @@
                     tools:hint="Company name" />
 
                 <TextView
+                    android:id="@+id/submitButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/rounded_corners"
-                    android:backgroundTint="?attr/colorAccent"
+                    android:enabled="@{isFormValid}"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="@string/submit"

@@ -22,6 +22,7 @@
         <item name="android:textColorHint">?attr/colorPrimaryDark</item>
         <item name="hintTextColor">?attr/colorPrimaryDark</item>
         <item name="hintTextAppearance">@style/text_input_hint_appearance</item>
+        <item name="errorEnabled">true</item>
     </style>
 
 </resources>
