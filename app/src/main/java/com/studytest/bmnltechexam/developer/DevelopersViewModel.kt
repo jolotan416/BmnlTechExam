@@ -15,11 +15,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DevelopersViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
-    private val mDevelopers: MutableLiveData<List<Developer>> by lazy {
-        MutableLiveData<List<Developer>>()
+    private val mDevelopers: MutableLiveData<MutableList<Developer>> by lazy {
+        MutableLiveData<MutableList<Developer>>()
     }
 
-    val developers: LiveData<List<Developer>> = mDevelopers
+    private val mDisplayedDeveloper: MutableLiveData<Developer> by lazy {
+        MutableLiveData<Developer>()
+    }
+
+    val developers: LiveData<MutableList<Developer>> = mDevelopers
+    val displayedDeveloper: LiveData<Developer> = mDisplayedDeveloper
 
     fun requestDevelopers() {
         // TODO: Handle loading
@@ -28,7 +33,37 @@ class DevelopersViewModel @Inject constructor(private val apiService: ApiService
                 val developers = apiService.getDevelopers()
 
                 withContext(Dispatchers.Main) {
-                    mDevelopers.value = developers
+                    mDevelopers.value = developers.toMutableList()
+                }
+            } catch (exception: Exception) {
+                // TODO: Properly handle exceptions
+
+                Log.d("DevelopersViewModel", "Error: ${exception.message}")
+            }
+        }
+    }
+
+    fun createDeveloper(developer: Developer) {
+        // TODO: Handle loading
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val updatedDeveloper =
+                    if (developer.id.isBlank()) apiService.addDeveloper(developer) else
+                        apiService.editDeveloper(developer.id, developer)
+
+                withContext(Dispatchers.Main) {
+                    mDisplayedDeveloper.value = updatedDeveloper
+                    mDevelopers.value = mDevelopers.value?.also { developerList ->
+                        val developerIndex =
+                            developerList.indexOfFirst { it.id == updatedDeveloper.id }
+                        if (developerIndex != -1) {
+                            developerList[developerIndex] = developer
+
+                            return@also
+                        }
+                        developerList.add(developer)
+                    }
                 }
             } catch (exception: Exception) {
                 // TODO: Properly handle exceptions

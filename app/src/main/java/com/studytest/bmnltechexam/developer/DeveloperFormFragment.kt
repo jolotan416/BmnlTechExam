@@ -8,29 +8,35 @@ import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import com.studytest.bmnltechexam.R
+import com.studytest.bmnltechexam.data.developer.Developer
 import com.studytest.bmnltechexam.databinding.FragmentDeveloperFormBinding
 import com.studytest.bmnltechexam.views.BmnlToolbarFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DeveloperFormFragment : Fragment(R.layout.fragment_developer_form), TextWatcher {
+class DeveloperFormFragment(private val developerPageCallback: DeveloperPageCallback) :
+    Fragment(R.layout.fragment_developer_form), TextWatcher {
     companion object {
         const val TAG = "DeveloperFormFragment"
     }
 
     private lateinit var binding: FragmentDeveloperFormBinding
     private val developerFormViewModel: DeveloperFormViewModel by viewModels()
+    private val developersViewModel: DevelopersViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val developer: Developer? =
+            arguments?.getParcelable(DeveloperPageArgument.DEVELOPER.argumentName)
         binding = FragmentDeveloperFormBinding.bind(view)
-        configureToolbar()
-        configureTextFields()
-        observeViewModel()
+        binding.developer = developer
+        configureViews()
+        initializeViewModel(developer)
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -44,48 +50,9 @@ class DeveloperFormFragment : Fragment(R.layout.fragment_developer_form), TextWa
         }
     }
 
-    private fun observeViewModel() {
-        developerFormViewModel.apply {
-            isNameValid.observe(viewLifecycleOwner) { isNameValid ->
-                binding.nameTextField.error =
-                    if (!isNameValid) getString(R.string.name_error) else null
-            }
-
-            isEmailValid.observe(viewLifecycleOwner) { isEmailValid ->
-                binding.emailTextField.error =
-                    if (!isEmailValid) getString(R.string.email_error) else null
-            }
-
-            isPhoneNumberValid.observe(viewLifecycleOwner) { isPhoneNumberValid ->
-                binding.phoneNumberTextField.error =
-                    if (!isPhoneNumberValid) getString(R.string.phone_number_error) else null
-            }
-
-            isCompanyNameValid.observe(viewLifecycleOwner) { isCompanyNameValid ->
-                binding.companyNameTextField.error =
-                    if (!isCompanyNameValid) getString(R.string.company_name_error) else null
-            }
-
-            isFormValid.observe(viewLifecycleOwner) { isFormValid ->
-                binding.apply {
-                    this.isFormValid = isFormValid
-
-                    val typedValue = TypedValue()
-                    val typedArray = requireContext().obtainStyledAttributes(
-                        typedValue.data,
-                        intArrayOf(R.attr.colorAccent)
-                    )
-                    val colorAccent = typedArray.getColor(0, 0)
-                    typedArray.recycle()
-                    
-                    val buttonColor = if (isFormValid) colorAccent else ContextCompat.getColor(
-                        requireContext(),
-                        R.color.hintGray
-                    )
-                    submitButton.backgroundTintList = ColorStateList.valueOf(buttonColor)
-                }
-            }
-        }
+    private fun configureViews() {
+        configureToolbar()
+        configureTextFields()
     }
 
     private fun configureToolbar() {
@@ -139,6 +106,70 @@ class DeveloperFormFragment : Fragment(R.layout.fragment_developer_form), TextWa
                     }
                 }
                 addTextChangeListener(this@DeveloperFormFragment)
+            }
+        }
+    }
+
+    private fun initializeViewModel(developerArgument: Developer?) {
+        developerFormViewModel.apply {
+            isNameValid.observe(viewLifecycleOwner) { isNameValid ->
+                binding.nameTextField.error =
+                    if (!isNameValid) getString(R.string.name_error) else null
+            }
+
+            isEmailValid.observe(viewLifecycleOwner) { isEmailValid ->
+                binding.emailTextField.error =
+                    if (!isEmailValid) getString(R.string.email_error) else null
+            }
+
+            isPhoneNumberValid.observe(viewLifecycleOwner) { isPhoneNumberValid ->
+                binding.phoneNumberTextField.error =
+                    if (!isPhoneNumberValid) getString(R.string.phone_number_error) else null
+            }
+
+            isCompanyNameValid.observe(viewLifecycleOwner) { isCompanyNameValid ->
+                binding.companyNameTextField.error =
+                    if (!isCompanyNameValid) getString(R.string.company_name_error) else null
+            }
+
+            developer.observe(viewLifecycleOwner) { developer ->
+                binding.apply {
+                    val isValid = developer != null
+                    isFormValid = isValid
+
+                    configureSubmitButton(isValid, developer)
+                }
+            }
+
+            initialize(developerArgument)
+        }
+
+        developersViewModel.displayedDeveloper.observe(viewLifecycleOwner) { updateDeveloper ->
+            parentFragmentManager.popBackStack()
+            if (developerFormViewModel.developerId.isBlank()) {
+                // TODO: Show developer details page
+            }
+        }
+    }
+
+    private fun configureSubmitButton(isFormValid: Boolean, developer: Developer?) {
+        val typedValue = TypedValue()
+        val typedArray = requireContext().obtainStyledAttributes(
+            typedValue.data,
+            intArrayOf(R.attr.colorAccent)
+        )
+        val colorAccent = typedArray.getColor(0, 0)
+        typedArray.recycle()
+
+        val buttonColor = if (isFormValid) colorAccent else ContextCompat.getColor(
+            requireContext(),
+            R.color.hintGray
+        )
+
+        binding.submitButton.apply {
+            backgroundTintList = ColorStateList.valueOf(buttonColor)
+            setOnClickListener {
+                developersViewModel.createDeveloper(developer ?: return@setOnClickListener)
             }
         }
     }

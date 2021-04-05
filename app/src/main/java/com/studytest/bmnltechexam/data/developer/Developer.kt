@@ -7,17 +7,17 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Developer(
     @SerializedName("id")
-    val id: String,
+    val id: String = "",
 
     @SerializedName("name")
-    val name: String,
+    val name: String = "",
 
     @SerializedName("email")
-    val email: String,
+    val email: String = "",
 
     @SerializedName("phone")
-    val phone: String,
+    val phone: String = "",
 
     @SerializedName("company")
-    val company: Company
+    val company: Company = Company()
 ) : Parcelable

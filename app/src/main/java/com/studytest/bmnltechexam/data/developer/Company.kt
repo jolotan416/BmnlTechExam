@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Company(
     @SerializedName("name")
-    val name: String
+    val name: String = ""
 ) : Parcelable
