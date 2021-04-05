@@ -9,17 +9,21 @@
     <!-- Developer Form Copies -->
     <string name="add_contact">Add contact</string>
 
-    <string name="name">Name*</string>
+    <string name="name">Name</string>
     <string name="name_error">Please fill out your name properly.</string>
 
-    <string name="email">Email*</string>
+    <string name="email">Email</string>
     <string name="email_error">Please enter a valid email address.</string>
 
-    <string name="phone_number">Phone number*</string>
+    <string name="phone_number">Phone number</string>
     <string name="phone_number_error">Please enter a valid phone number.</string>
 
-    <string name="company_name">Company name*</string>
+    <string name="company_name">Company name</string>
     <string name="company_name_error">Please enter a valid company name.</string>
 
     <string name="submit">Submit</string>
+
+    <!-- Developer List Copies -->
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

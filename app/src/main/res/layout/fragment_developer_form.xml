@@ -48,8 +48,9 @@
                     android:layout_height="wrap_content"
                     bmnl:hintValue="@{@string/name}"
                     bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME}"
+                    bmnl:required="@{true}"
                     bmnl:textValue="@{developer.name}"
-                    tools:hint="Name" />
+                    tools:hint="Name*" />
 
                 <com.studytest.bmnltechexam.views.BmnlTextInputLayout
                     android:id="@+id/emailTextField"
@@ -59,8 +60,9 @@
                     android:layout_marginTop="12dp"
                     bmnl:hintValue="@{@string/email}"
                     bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS}"
+                    bmnl:required="@{true}"
                     bmnl:textValue="@{developer.email}"
-                    tools:hint="Email" />
+                    tools:hint="Email*" />
 
                 <com.studytest.bmnltechexam.views.BmnlTextInputLayout
                     android:id="@+id/phoneNumberTextField"
@@ -70,8 +72,9 @@
                     android:layout_marginTop="12dp"
                     bmnl:hintValue="@{@string/phone_number}"
                     bmnl:inputType="@{InputType.TYPE_CLASS_NUMBER}"
+                    bmnl:required="@{true}"
                     bmnl:textValue="@{developer.phone}"
-                    tools:hint="Phone number" />
+                    tools:hint="Phone number*" />
 
                 <com.studytest.bmnltechexam.views.BmnlTextInputLayout
                     android:id="@+id/companyNameTextField"
@@ -81,8 +84,9 @@
                     android:layout_marginTop="12dp"
                     bmnl:hintValue="@{@string/company_name}"
                     bmnl:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME}"
+                    bmnl:required="@{true}"
                     bmnl:textValue="@{developer.company.name}"
-                    tools:hint="Company name" />
+                    tools:hint="Company name*" />
 
                 <TextView
                     android:id="@+id/submitButton"

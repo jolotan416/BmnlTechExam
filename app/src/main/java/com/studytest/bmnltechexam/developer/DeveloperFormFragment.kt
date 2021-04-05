@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import com.studytest.bmnltechexam.R
+import com.studytest.bmnltechexam.data.RequestState
 import com.studytest.bmnltechexam.data.developer.Developer
 import com.studytest.bmnltechexam.databinding.FragmentDeveloperFormBinding
 import com.studytest.bmnltechexam.views.BmnlToolbarFragment
@@ -25,18 +26,16 @@ class DeveloperFormFragment(private val developerPageCallback: DeveloperPageCall
     }
 
     private lateinit var binding: FragmentDeveloperFormBinding
-    private val developerFormViewModel: DeveloperFormViewModel by viewModels()
+
     private val developersViewModel: DevelopersViewModel by activityViewModels()
+    private val developerFormViewModel: DeveloperFormViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val developer: Developer? =
-            arguments?.getParcelable(DeveloperPageArgument.DEVELOPER.argumentName)
         binding = FragmentDeveloperFormBinding.bind(view)
-        binding.developer = developer
         configureViews()
-        initializeViewModel(developer)
+        initializeViewModel()
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -110,7 +109,25 @@ class DeveloperFormFragment(private val developerPageCallback: DeveloperPageCall
         }
     }
 
-    private fun initializeViewModel(developerArgument: Developer?) {
+    private fun initializeViewModel() {
+        developersViewModel.apply {
+            updateDeveloperRequestState.observe(viewLifecycleOwner) { requestState ->
+                if (requestState != RequestState.SUCCESSFUL) return@observe
+
+                parentFragmentManager.popBackStack()
+                if (developerFormViewModel.developerId.isBlank()) {
+                    developerPageCallback.showPage(DeveloperPage.DEVELOPER_DETAILS)
+                }
+            }
+
+            displayedDeveloper.observe(viewLifecycleOwner) { developer ->
+                developerFormViewModel.initialize(developer)
+                binding.developer = developer
+
+                displayedDeveloper.removeObservers(viewLifecycleOwner)
+            }
+        }
+
         developerFormViewModel.apply {
             isNameValid.observe(viewLifecycleOwner) { isNameValid ->
                 binding.nameTextField.error =
@@ -139,15 +156,6 @@ class DeveloperFormFragment(private val developerPageCallback: DeveloperPageCall
 
                     configureSubmitButton(isValid, developer)
                 }
-            }
-
-            initialize(developerArgument)
-        }
-
-        developersViewModel.displayedDeveloper.observe(viewLifecycleOwner) { updateDeveloper ->
-            parentFragmentManager.popBackStack()
-            if (developerFormViewModel.developerId.isBlank()) {
-                // TODO: Show developer details page
             }
         }
     }

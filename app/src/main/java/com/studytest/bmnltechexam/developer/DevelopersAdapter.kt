@@ -1,6 +1,5 @@
 package com.studytest.bmnltechexam.developer
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.studytest.bmnltechexam.data.developer.Developer
 import com.studytest.bmnltechexam.databinding.DeveloperItemBinding
 
-class DevelopersAdapter(private val developerPageCallback: DeveloperPageCallback) :
+class DevelopersAdapter(private val callback: DeveloperCallback) :
     RecyclerView.Adapter<DevelopersAdapter.ViewHolder>() {
     private val developers: AsyncListDiffer<Developer> =
         AsyncListDiffer(this, object : DiffUtil.ItemCallback<Developer>() {
@@ -42,12 +41,13 @@ class DevelopersAdapter(private val developerPageCallback: DeveloperPageCallback
             binding.apply {
                 this.developer = developer
                 root.setOnClickListener {
-                    val arguments = Bundle().apply {
-                        putParcelable(DeveloperPageArgument.DEVELOPER.argumentName, developer)
-                    }
-                    // TODO: Use DeveloperPageCallback to show developer
+                    callback.onSelectDeveloper(developer)
                 }
             }
         }
+    }
+
+    interface DeveloperCallback {
+        fun onSelectDeveloper(developer: Developer)
     }
 }

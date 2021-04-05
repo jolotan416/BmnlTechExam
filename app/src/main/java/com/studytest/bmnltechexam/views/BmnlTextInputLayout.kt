@@ -13,7 +13,12 @@ class BmnlTextInputLayout @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : TextInputLayout(context, attributeSet, defStyleAttr) {
+    companion object {
+        private const val REQUIRED_INDICATOR = "*"
+    }
+
     private var binding: BmnlTextInputLayoutBinding? = null
+    private var isRequired = false
 
     var textValue: String? = null
         get() = binding?.textField?.text?.toString()
@@ -35,6 +40,7 @@ class BmnlTextInputLayout @JvmOverloads constructor(
 
     fun setHintValue(hint: String) {
         this.hint = hint
+        setHintValue()
     }
 
     fun setInputType(inputType: Int) {
@@ -45,10 +51,21 @@ class BmnlTextInputLayout @JvmOverloads constructor(
         binding?.textField?.addTextChangedListener(textWatcher)
     }
 
+    fun setRequired(isRequired: Boolean) {
+        this.isRequired = isRequired
+        setHintValue()
+    }
+
     private fun inflateViews() {
         val inflater = LayoutInflater.from(context)
 
         binding = BmnlTextInputLayoutBinding.inflate(inflater, this)
         setPadding(0)
+    }
+
+    private fun setHintValue() {
+        val currentHint = hint?.toString() ?: ""
+        val isCurrentHintRequired = currentHint.endsWith(REQUIRED_INDICATOR)
+        hint = if (isRequired && !isCurrentHintRequired) currentHint + REQUIRED_INDICATOR else hint
     }
 }

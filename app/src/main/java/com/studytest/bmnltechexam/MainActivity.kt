@@ -16,11 +16,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), DeveloperPageCal
         showPage(DeveloperPage.DEVELOPER_LIST)
     }
 
-    override fun showPage(developerPage: DeveloperPage, arguments: Bundle?) {
+    override fun showPage(developerPage: DeveloperPage) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             developerPage.let {
-                replace(R.id.fragmentContainer, it.fragmentClass, arguments, it.tag)
+                replace(R.id.fragmentContainer, it.fragmentClass, null, it.tag)
                 if (it.willAddToBackStack) {
                     addToBackStack(it.tag)
                 }
